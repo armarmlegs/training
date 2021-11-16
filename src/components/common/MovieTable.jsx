@@ -15,13 +15,21 @@ class Movie extends Component {
     this.setState({ movies: supermovies });
   };
 
-  handleLike = (movie) => {
-    const movieLiked = [...this.state.movies];
-    const index = movieLiked.indexOf(movie);
-    movieLiked[index] = { ...movieLiked[index] };
-    movieLiked[index].liked = !movieLiked[index].liked;
-    this.setState({ movies: movieLiked });
-  };
+handleLike(movie){
+  console.log('clickity clax', movie)
+  const moviCopies = [...this.state.movies];
+  const index = moviCopies.indexOf(movie);
+  moviCopies[index] = {...moviCopies[index]};
+  moviCopies[index].liked = !moviCopies[index].liked
+  this.setState({ movies : moviCopies})
+}
+
+handlePageChange() {
+  console.log('ignition')
+}
+
+
+
 
   render() {
     const count = this.state.movies.length;
@@ -38,6 +46,8 @@ class Movie extends Component {
               <th scope="col">Genre</th>
               <th scope="col">Stock</th>
               <th scope="col">Rate</th>
+              <th scope="col">Delete</th>
+              <th scope="col">Like</th>
             </tr>
           </thead>
           <tbody>
@@ -56,13 +66,14 @@ class Movie extends Component {
                     Delete
                   </button>
                 </td>
-                <Like />
-
-                <td></td>
+                <td>
+                  <Like liked={movie.liked} onLiked={() =>this.handleLike(movie)} />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <Page pageSize={pageSize} itemCount={count} onPageChange={this.handlePageChange}/>
       </div>
     );
   }

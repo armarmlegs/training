@@ -1,15 +1,18 @@
-import React, { Component } from 'react'
-class Like extends React.Component {
-  render() { 
-    return <div>
+import React from "react";
 
-  <i className="fa fa-heart -o"></i>
+const Like = props => {
+  let classes = "fa fa-heart";
+  if (!props.liked) classes += "-o";
+  return (
+    <div>
+      <i
+        className={classes}
+        aria-hidden="true"
+        onClick={props.onLiked}
+        style={{ cursor: "pointer" }}
+      />
+    </div>
+  );
+};
 
-
-
-
-    </div>;
-  }
-}
- 
 export default Like;
