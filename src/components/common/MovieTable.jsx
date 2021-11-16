@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getMovies } from "../../data/fakeMovieService";
 import Like from "./Like";
 import Page from "./Pagination";
+import { Paginate } from "../../utils/paginate";
 
 class Movie extends Component {
   state = {
@@ -15,25 +16,23 @@ class Movie extends Component {
     this.setState({ movies: supermovies });
   };
 
-handleLike(movie){
-  console.log('clickity clax', movie)
-  const moviCopies = [...this.state.movies];
-  const index = moviCopies.indexOf(movie);
-  moviCopies[index] = {...moviCopies[index]};
-  moviCopies[index].liked = !moviCopies[index].liked
-  this.setState({ movies : moviCopies})
-}
+  handleLike(movie) {
+    console.log("clickity clax", movie);
+    const moviCopies = [...this.state.movies];
+    const index = moviCopies.indexOf(movie);
+    moviCopies[index] = { ...moviCopies[index] };
+    moviCopies[index].liked = !moviCopies[index].liked;
+    this.setState({ movies: moviCopies });
+  }
 
-handlePageChange() {
-  console.log('ignition')
-}
-
-
-
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
+  };
 
   render() {
     const count = this.state.movies.length;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, movies } = this.state;
+    const moviestar = Paginate(movies, currentPage, pageSize)
     return (
       <div>
         <h1>Showing {count} Movies in the database</h1>
@@ -51,7 +50,7 @@ handlePageChange() {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => (
+            {moviestar.map((movie) => (
               <tr key={movie._id}>
                 <th scope="row">{movie.title}</th>
                 <td>{movie.genre.name}</td>
@@ -67,13 +66,21 @@ handlePageChange() {
                   </button>
                 </td>
                 <td>
-                  <Like liked={movie.liked} onLiked={() =>this.handleLike(movie)} />
+                  <Like
+                    liked={movie.liked}
+                    onLiked={() => this.handleLike(movie)}
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Page pageSize={pageSize} itemCount={count} onPageChange={this.handlePageChange}/>
+        <Page
+          currentPage={currentPage}
+          pageSize={pageSize}
+          itemCount={count}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   }
