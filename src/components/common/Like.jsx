@@ -1,6 +1,7 @@
 import React from "react";
 
 const Like = props => {
+ 
   let classes = "fa fa-heart";
   if (!props.liked) classes += "-o";
   return (
@@ -8,7 +9,7 @@ const Like = props => {
       <i
         className={classes}
         aria-hidden="true"
-        onClick={props.onLiked}
+        onClick={props.onLike}
         style={{ cursor: "pointer" }}
       />
     </div>
