@@ -26,14 +26,13 @@ class Movie extends Component {
     this.setState({ movies: supermovies });
   };
 
-  handleLike(movie) {
-    console.log("clickity clax", movie);
+  handleLike = (movie) => {
     const moviCopies = [...this.state.movies];
     const index = moviCopies.indexOf(movie);
     moviCopies[index] = { ...moviCopies[index] };
     moviCopies[index].liked = !moviCopies[index].liked;
     this.setState({ movies: moviCopies });
-  }
+  };
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
@@ -44,8 +43,7 @@ class Movie extends Component {
   };
 
   handleSort = (sortColumn) => {
-   
-    this.setState({ sortColumn});
+    this.setState({ sortColumn });
   };
   render() {
     const count = this.state.movies.length;
@@ -82,7 +80,6 @@ class Movie extends Component {
               onLike={this.handleLike}
               onDelete={this.handleDelete}
               onSort={this.handleSort}
-
             />
             <Page
               currentPage={currentPage}

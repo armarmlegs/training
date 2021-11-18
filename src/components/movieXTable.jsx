@@ -34,10 +34,5 @@ class MoviesXTable extends Component {
   }
 }
 
-// const MoviesXTable = (props) => {
-
-//
-
-// }
 
 export default MoviesXTable;
