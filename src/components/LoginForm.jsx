@@ -9,37 +9,37 @@ class LoginForm extends React.Component {
       password: "",
     },
 
-    errors:{}
+    errors: {},
   };
 
-
   validate = () => {
-      const {account} = this.state;
-      const errors = {}
+    const { account } = this.state;
+    const errors = {};
 
-      if(account.username.trim() === "")
-      errors.username = 'username is required'
+    if (account.username.trim() === "")
+      errors.username = "username is required";
 
-      if(account.password.trim() === "")
-      errors.password = 'password is required'
+    if (account.password.trim() === "")
+      errors.password = "password is required";
 
-
-      return Object.keys(errors).length === 0 ? null : errors;
-  }
+    return Object.keys(errors).length === 0 ? null : errors;
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const errors = this.validate()
-    console.log(errors);
-    this.setState({errors})
+    const errors = this.validate();
 
-    if (errors) return ;
+
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
     console.log("submited");
     //call server
-    const username = this.username.current.value;
   };
 
   handleChange = (e) => {
+      const error = this.validateProperty(e)
+
     const account = { ...this.state.account };
     account[e.currentTarget.name] = e.currentTarget.value;
 
@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { account } = this.state;
+    const { account, errors } = this.state;
 
     return (
       <div>
@@ -59,12 +59,15 @@ class LoginForm extends React.Component {
             value={account.username}
             label="username"
             id="username"
+            error={errors.username}
           />
           <Input
             name="password"
             onChange={this.handleChange}
             value={account.password}
             label="password"
+            id="password"
+            error={errors.password}
           />
 
           <button className="btn btn-primary">Submit</button>
