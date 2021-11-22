@@ -6,6 +6,7 @@ import ListGroup from "./listGroup";
 import { getGenres } from "../../data/fakeGenreService";
 import MoviesXTable from "../movieXTable";
 import _ from "lodash";
+import { NavLink } from "react-router-dom";
 
 class Movie extends Component {
   state = {
@@ -79,6 +80,7 @@ class Movie extends Component {
       <div>
         <h1>Showing {totalCount} Movies in the database</h1>
         <p> {count === 0 && "No movies in the database"}</p>
+        
         <div className="row">
           <div className="col3">
             <ListGroup
@@ -87,7 +89,11 @@ class Movie extends Component {
               selectedItem={this.state.selectedGenre}
             />
           </div>
+          
           <div className="col">
+            <NavLink to="/movies/new">
+          <button className="btn-primary">New Movie</button>
+          </NavLink>
             <MoviesXTable
               moviestar={moviestar}
               sortColumn={sortColumn}
