@@ -16,8 +16,8 @@ function App() {
       <main className="container">
         <Switch>
        
-        <Route path="/movies/:title/:id?" component={MovieForms} />
-        <Route path="/movies/new" component={MovieForms} />
+        <Route path="/movies/:id" component={MovieForms} />
+        {/* <Route path="/movies/new" component={MovieForms} /> */}
         <Route  path="/movies" component={Movie} />
         <Route  path="/login" component={LoginForm} />
         <Route  path="/register" component={RegisterForm} />
