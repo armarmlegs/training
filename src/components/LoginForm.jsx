@@ -1,5 +1,9 @@
 import React from "react";
 import Input from "./common/input";
+import Joi from 'joi-browser'
+import { join } from "lodash";
+
+
 class LoginForm extends React.Component {
   //   username = React.createRef();
   //access the DOM
@@ -12,7 +16,23 @@ class LoginForm extends React.Component {
     errors: {},
   };
 
+  schema ={
+      username : Joi.string().min(3).required(),
+      password : Joi.string().min(3).required()
+  }
+
+  validateProperty = (input) => {
+    if (input.name === "username") {
+      if (input.value.trim() === "") return "username is required";
+    }
+    if (input.name === "password") {
+      if (input.value.trim() === "") return "password is required ";
+    }
+  };
   validate = () => {
+const result = Joi.validate(this.state.account, this.schema, {abortEarly:false})
+console.log(result)
+
     const { account } = this.state;
     const errors = {};
 
@@ -29,7 +49,6 @@ class LoginForm extends React.Component {
     e.preventDefault();
     const errors = this.validate();
 
-
     this.setState({ errors: errors || {} });
 
     if (errors) return;
@@ -37,13 +56,16 @@ class LoginForm extends React.Component {
     //call server
   };
 
-  handleChange = (e) => {
-      const error = this.validateProperty(e)
+  handleChange = ({ currentTarget: input }) => {
+    const errors = { ...this.state.errors };
+    const errorMessage = this.validateProperty(input);
+    if (errorMessage) errors[input.name] = errorMessage;
+    else delete errors[input.name];
 
     const account = { ...this.state.account };
-    account[e.currentTarget.name] = e.currentTarget.value;
+    account[input.name] = input.value;
 
-    this.setState({ account });
+    this.setState({ account, errors });
   };
 
   render() {
