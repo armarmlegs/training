@@ -9,26 +9,14 @@ class Form extends Component {
     errors: {},
   };
 
-  validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
-
-    return error ? error.details[0].message : null;
-  };
-
-  //     if (input.name === "username") {
-  //       if (input.value.trim() === "") return "username is required";
-  //     }
-  //     if (input.name === "password") {
-  //       if (input.value.trim() === "") return "password is required ";
-  //     }
-  //   };
+ 
   validate = () => {
+    
     const options = {
       abortEarly: false,
     };
     const { error } = Joi.validate(this.state.data, this.schema, options);
+    console.log(error)
     if (!error) return null;
 
     const errors = {};
@@ -47,6 +35,24 @@ class Form extends Component {
 
     // return Object.keys(errors).length === 0 ? null : errors;
   };
+
+  validateProperty = ({ name, value }) => {
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] };
+    const { error } = Joi.validate(obj, schema);
+   
+
+    return error ? error.details[0].message : null;
+  };
+
+  //     if (input.name === "username") {
+  //       if (input.value.trim() === "") return "username is required";
+  //     }
+  //     if (input.name === "password") {
+  //       if (input.value.trim() === "") return "password is required ";
+  //     }
+  //   };
+
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -94,7 +100,7 @@ class Form extends Component {
     );
   }
 
-  renderSelect(name, label, option, type) {
+  renderSelect(name, label, option) {
     const { data, errors } = this.state;
     return (
       <Select
@@ -105,7 +111,7 @@ class Form extends Component {
       id={name}
       option={option}
       error={errors[name]}
-      type={type}
+     
       />
     );
   

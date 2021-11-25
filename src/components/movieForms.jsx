@@ -1,13 +1,12 @@
 import React from "react";
 import Form from "./common/Form";
 import Joi from "joi-browser";
-import { getGenres } from "../data/fakeGenreService";
+import { getGenres } from "../data/genreService";
 import { getMovie, saveMovie } from "../data/fakeMovieService";
 
 class MovieForm extends Form {
   state = {
     data: {
-      _id: "",
       title: "",
       numberInStock: "",
       dailyRentalRate: "",
