@@ -9,14 +9,12 @@ class Form extends Component {
     errors: {},
   };
 
- 
   validate = () => {
-    
     const options = {
       abortEarly: false,
     };
     const { error } = Joi.validate(this.state.data, this.schema, options);
-    console.log(error)
+
     if (!error) return null;
 
     const errors = {};
@@ -40,7 +38,6 @@ class Form extends Component {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, schema);
-   
 
     return error ? error.details[0].message : null;
   };
@@ -52,7 +49,6 @@ class Form extends Component {
   //       if (input.value.trim() === "") return "password is required ";
   //     }
   //   };
-
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -104,17 +100,15 @@ class Form extends Component {
     const { data, errors } = this.state;
     return (
       <Select
-      name={name}
-      onChange={this.handleChange}
-      value={data[name]}
-      label={label}
-      id={name}
-      option={option}
-      error={errors[name]}
-     
+        name={name}
+        onChange={this.handleChange}
+        value={data[name]}
+        label={label}
+        id={name}
+        option={option}
+        error={errors[name]}
       />
     );
-  
   }
 }
 
