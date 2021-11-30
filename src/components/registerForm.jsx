@@ -25,11 +25,10 @@ class RegisterForm extends Form {
       await register(this.state.data);
     } catch (error) {
       if (error.response && error.response.status === 400) {
-          console.log('hello')
-        const errors = { ...this.state.errors };
-        errors.username = "already in use"
        
-        this.setState({ errors });
+        const errors = { ...this.state.errors };
+        errors.username = error.response.data;
+        this.setState({errors});
       }
     }
     //call server
