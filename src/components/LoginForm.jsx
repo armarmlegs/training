@@ -4,7 +4,6 @@ import Form from "./common/Form";
 import { login } from "../data/authService";
 
 class LoginForm extends Form {
-
   state = {
     data: {
       username: "",
@@ -39,33 +38,24 @@ class LoginForm extends Form {
   // return Object.keys(errors).length === 0 ? null : errors;
 
   doSubmit = async () => {
-
-
     try {
-      const {data } = this.state;
-     
-      const {data : jwt } = await login(data.username, data.password)
-      console.log(jwt)
-      localStorage.setItem("token", jwt);
-      this.props.history.push('/');
+      const { data } = this.state;
+
+      await login(data.username, data.password);
+
+      window.location = "/";
     } catch (error) {
-      if(error.response && error.response.status === 400) {
-        const errors = {...this.state.errors};
+      if (error.response && error.response.status === 400) {
+        const errors = { ...this.state.errors };
         errors.username = error.response.data;
 
-        this.setState({ errors})
+        this.setState({ errors });
       }
-      
     }
     //call server
-
-
-    
   };
 
   render() {
-    
-
     return (
       <div>
         <h1>Login</h1>
