@@ -9,6 +9,7 @@ import SearchBox from "./searchbox";
 import _ from "lodash";
 import { NavLink } from "react-router-dom";
 import { toast } from 'react-toastify';
+import auth from '../../data/authService'
 
 class Movie extends Component {
   state = {
@@ -101,10 +102,14 @@ class Movie extends Component {
   }
 
 
+
+
   render() {
     const count = this.state.movies.length;
     const { pageSize, currentPage, genres, sortColumn } =
       this.state;
+      const {user} = this.props;
+      
 
     const {totalCount, data : moviestar}  = this.getPageData();
 
@@ -123,9 +128,9 @@ class Movie extends Component {
           </div>
           
           <div className="col">
-            <NavLink to="/movies/new">
+         { auth.getCurrentUser() && <NavLink to="/movies/new">
           <button className="btn-primary">New Movie</button>
-          </NavLink>
+          </NavLink>}
           <SearchBox value = {this.searchQuery} onChange={this.handleSearch}/>
             <MoviesXTable
               moviestar={moviestar}

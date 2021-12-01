@@ -1,6 +1,6 @@
 import Movie from "./components/common/MovieTable";
 import Navbar from "./components/navbar";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import { ToastContainer } from "react-toastify";
 import Rentals from "./components/rentals";
 import Customers from "./components/customers";
@@ -9,34 +9,40 @@ import MovieForms from "./components/movieForms";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logout";
+import auth from "./data/authService";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/common/protectRoute";
 import "./App.css";
 import { Component } from "react";
-import jwtDecode from "jwt-decode";
+import MoviesXTable from "./components/movieXTable";
 
 class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      console.log("hello");
-      const jwt = localStorage.getItem("token");
-      const user = jwtDecode(jwt);
-      console.log(user);
-      this.setState({ user });
-    } catch (error) {}
+    const user = auth.getCurrentUser();
+    this.setState({ user });
   }
 
   render() {
+    const { user } = this.state;
     return (
       <div>
         <ToastContainer />
-        <Navbar user={this.state.user} />
+        <Navbar user={user} />
         <main className="container">
           <Switch>
-            <Route path="/movies/:id" component={MovieForms} />
-            {/* <Route path="/movies/new" component={MovieForms} /> */}
-            <Route path="/movies" component={Movie} />
+            <ProtectedRoute
+              path="/movies/:id"
+             component={MovieForms}
+             user = {user}
+            />
+
+            <ProtectedRoute
+              path="/movies"
+              component={Movie}
+              user = {user}
+            />
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/logout" component={Logout} />

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { logout } from '../data/authService';
+import auth from '../data/authService';
 class Logout extends Component {
     componentDidMount() {
-        logout();
+        auth.logout();
         window.location = '/'
     }
     
